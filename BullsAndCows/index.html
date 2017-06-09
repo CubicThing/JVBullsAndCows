@@ -1,0 +1,115 @@
+<html>
+    <head>
+        <meta charset="utf-8" />
+     <title>JAVASCRIPT</title>    
+     <script src="script.js"></script>
+     
+     <script>
+        
+    var toguess = [0,1,2,3,4];
+    var tries = 0;
+    
+    
+     function correct(one,two,three,four){
+    
+    var valide = new boolean (false);
+    if (one.length != 1 || two.length != 1 || three.length != 1 || four.length != 1){
+            alert("N'entrez qu'une seule fois chaque chiffre.");
+            valide = false;
+            }else if(one == two || one == three || one==four || two == three || two == four || three == four){
+            alert("N'entrez qu'un chiffre entre 1 et 9");
+            valide = false;
+            }else{
+            valide = true;
+            }
+    
+    alert("TRUE");
+    return valide;
+    }
+    
+        
+    function gentoguess(){
+        var rando;
+        
+        for (i = 0; i < 5; i++);{
+            rando = Math.floor(Math.random() * 10);
+            toguess[i] = rando; //TODO : Verification anti doublons
+        }
+                                                                                                          
+        
+    }
+    
+    
+    function initiate(){
+        gentoguess();
+        document.getElementById("valider").disabled = false;
+        tries = 0;
+        document.getElementById("summary").innerHTML = "";  
+    }
+
+    
+    
+    function bullcow(){
+        
+        tries++;
+        
+        var bull = 0;
+        var cow = 0;
+        
+        var one = document.getElementById("input1").value;
+        var two = document.getElementById("input2").value;
+        var three = document.getElementById("input3").value;
+        var four = document.getElementById("input4").value;
+          
+        for(i = 0; i < 5; i++){
+            if ((toguess[i] == one) && (i == 1)){bull++;}
+            if ((toguess[i] == two) && (i == 2)){bull++;}
+            if ((toguess[i] == three) && (i == 3)){bull++;}
+            if ((toguess[i] == four) && (i == 4)){bull++;}
+            
+            if (toguess[i] == one){cow++;}
+            if (toguess[i] == two){cow++;}
+            if (toguess[i] == three){cow++;}
+            if (toguess[i] == four){cow++;}
+        }
+        
+        cow = cow - bull;
+        
+        
+        document.getElementById("summary").innerHTML = document.getElementById("summary").innerHTML.concat("</br>" +one + " " + two + " " + three + " " + four + " bull: " + bull + " cow: " + cow + " " + tries + " essais.");
+        
+        if (bull == 4){
+            document.getElementById("valider").disabled = true;
+            document.getElementById("summary").innerHTML = document.getElementById("summary").innerHTML.concat("</br>" + "Vous avez trouvé la réponse!");
+            } else if (tries == 7){    
+            document.getElementById("valider").disabled = true;
+            document.getElementById("summary").innerHTML = document.getElementById("summary").innerHTML.concat("</br>" + "Vous n'avez plus d'essais!");
+            tries = 0;
+        }   
+    }
+    </script>
+    </head>
+<body>
+    
+    <script>
+    initiate();
+    </script>
+    <form>
+        <input type="text" id="input1" value="">
+        <input type="text" id="input2" value="">
+        <input type="text" id="input3" value="">
+        <input type="text" id="input4" value=""> </br>
+        
+        <input type="button" id="valider" value="Valider" onclick="bullcow();">
+        <input type="button" id="refresh" value="Recommencer" onclick="initiate();">
+    </form>
+    
+    <p id="summary"></p>
+    
+    
+    
+    
+       
+</body>    
+    
+</html>
